@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 
 import { AppContext } from '../App';
 
-import { AppContainer } from '../containers/AppContainer/AppContainer';
-import { AsideContainer } from '../containers/AsideContainer/AsideContainer';
-import { MainContainer } from '../containers/MainContainer/MainContainer';
+import { AppContainer } from '../containers/AppContainer';
+import { AsideContainer } from '../containers/AsideContainer';
+import { MainContainer } from '../containers/MainContainer';
 import { Button } from '../Button/Button';
 import { UsersList } from './UsersList';
 

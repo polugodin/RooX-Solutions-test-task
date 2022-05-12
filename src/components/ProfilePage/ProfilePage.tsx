@@ -1,18 +1,19 @@
 import React, { useContext, useState } from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { AppContext } from '../App';
 
-import { AppContainer } from '../containers/AppContainer/AppContainer';
-import { AsideContainer } from '../containers/AsideContainer/AsideContainer';
-import { MainContainer } from '../containers/MainContainer/MainContainer';
+import { AppContainer } from '../containers/AppContainer';
+import { AsideContainer } from '../containers/AsideContainer';
+import { MainContainer } from '../containers/MainContainer';
 import { Button } from '../Button/Button';
 import { Input } from './Input';
 import { Textarea } from './Textarea';
 
 import styles from './ProfilePage.module.scss';
 
-interface FormInputs {
+type FormInputs = {
   name: string;
   username: string;
   email: string;
@@ -22,9 +23,12 @@ interface FormInputs {
   phone: string;
   website: string;
   comment: string;
-}
+};
 
-const onSubmit: SubmitHandler<FormInputs> = (data) => console.log(JSON.stringify(data));
+const onSubmit: SubmitHandler<FormInputs> = (data) => {
+  console.log(JSON.stringify(data));
+  alert(JSON.stringify(data, null, 2));
+};
 
 export const ProfilePage = () => {
   const {
@@ -33,18 +37,16 @@ export const ProfilePage = () => {
     handleSubmit,
     control,
   } = useForm<FormInputs>();
-  const { profilePageUser, setPage } = useContext(AppContext);
+  const { id } = useParams();
+  const { users } = useContext(AppContext);
+  const user = users[users.findIndex((user) => user.id === +id)];
+  const navigate = useNavigate();
   const [editingMode, setEditingMode] = useState<boolean>(false);
+
   return (
     <AppContainer>
       <AsideContainer>
-        <Button
-          onClick={() => {
-            setPage('usersList');
-          }}
-        >
-          Назад
-        </Button>
+        <Button onClick={() => navigate(-1)}>Назад</Button>
       </AsideContainer>
       <MainContainer>
         <div className={styles.mainTitleContainer}>
@@ -65,56 +67,60 @@ export const ProfilePage = () => {
             <div className={styles.formInputsContainer}>
               <Input
                 label="Name"
-                defaultValue={profilePageUser.name}
+                defaultValue={user.name}
                 error={!!errors.name}
-                register={register('name', { required: true, disabled: !editingMode })}
+                {...register('name', { required: true, disabled: !editingMode })}
               />
               <Input
                 label="User name"
-                defaultValue={profilePageUser.username}
+                defaultValue={user.username}
                 error={!!errors.username}
-                register={register('username', { required: true, disabled: !editingMode })}
+                {...register('username', { required: true, disabled: !editingMode })}
               />
               <Input
                 label="E-mail"
-                defaultValue={profilePageUser.email}
+                defaultValue={user.email}
                 error={!!errors.email}
-                register={register('email', { required: true, disabled: !editingMode })}
+                {...register('email', {
+                  required: true,
+                  pattern: /^\S+@\S+\.\S+$/,
+                  disabled: !editingMode,
+                })}
               />
               <Input
                 label="Street"
-                defaultValue={profilePageUser.address.street}
+                defaultValue={user.address.street}
                 error={!!errors.street}
-                register={register('street', { required: true, disabled: !editingMode })}
+                {...register('street', { required: true, disabled: !editingMode })}
               />
               <Input
                 label="City"
-                defaultValue={profilePageUser.address.city}
+                defaultValue={user.address.city}
                 error={!!errors.city}
-                register={register('city', { required: true, disabled: !editingMode })}
+                {...register('city', { required: true, disabled: !editingMode })}
               />
               <Input
                 label="Zip code"
-                defaultValue={profilePageUser.address.zipcode}
+                defaultValue={user.address.zipcode}
                 error={!!errors.zipcode}
-                register={register('zipcode', { required: true, disabled: !editingMode })}
+                {...register('zipcode', { required: true, disabled: !editingMode })}
               />
               <Input
                 label="Phone"
-                defaultValue={profilePageUser.phone}
+                defaultValue={user.phone}
                 error={!!errors.phone}
-                register={register('phone', { required: true, disabled: !editingMode })}
+                {...register('phone', { required: true, disabled: !editingMode })}
               />
               <Input
                 label="Website"
-                defaultValue={profilePageUser.website}
+                defaultValue={user.website}
                 error={!!errors.website}
-                register={register('website', { required: true, disabled: !editingMode })}
+                {...register('website', { required: true, disabled: !editingMode })}
               />
               <Textarea
                 label="Comment"
                 error={!!errors.comment}
-                register={register('comment', { disabled: !editingMode })}
+                {...register('comment', { disabled: !editingMode })}
               />
             </div>
             <div className={styles.submitButtonContainer}>

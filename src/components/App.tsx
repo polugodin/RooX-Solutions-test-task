@@ -1,46 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { UsersListPage } from './UsersListPage/UsersListPage';
 import { ProfilePage } from './ProfilePage/ProfilePage';
 
-export const App = () => {
-  const [users, setUsers] = useState<Users | null>(null);
-  const [page, setPage] = useState<PageStates>('usersList');
-  const [profilePageId, setProfilePageId] = useState<number | null>(null);
-  const profilePageUser = profilePageId
-    ? users[users.findIndex((user) => user.id === profilePageId)]
-    : null;
-
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then((response) => response.json())
-      .then((data) => setUsers(data));
-  }, []);
-
-  return (
-    <AppContext.Provider
-      value={{ page, setPage, users, setUsers, setProfilePageId, profilePageUser }}
-    >
-      {page === 'usersList' && <UsersListPage />}
-      {page === 'userProfile' && <ProfilePage />}
-    </AppContext.Provider>
-  );
-};
-
-export const AppContext = React.createContext<AppContextInterface | null>(null);
-
-interface AppContextInterface {
-  page: PageStates;
-  setPage: (page: PageStates) => void;
-  users: Users;
-  setUsers: (users: Users | ((currentUsers: Users) => Users)) => void;
-  setProfilePageId: (userId: number) => void;
-  profilePageUser: User | null;
-}
-
-type PageStates = 'usersList' | 'userProfile';
-
-interface User {
+type User = {
   id: number;
   name: string;
   username: string;
@@ -62,6 +26,38 @@ interface User {
     catchPhrase: string;
     bs: string;
   };
-}
+};
 
-type Users = Array<User>;
+type Users = Array<User> | null;
+
+type AppContext = {
+  users: Users;
+  setUsers: (users: Users | ((currentUsers: Users) => Users)) => void;
+} | null;
+
+export const AppContext = React.createContext<AppContext>(null);
+
+export const App = () => {
+  const [users, setUsers] = useState<Users>(null);
+  const [profilePageId, setProfilePageId] = useState<number | null>(null);
+  const profilePageUser = profilePageId
+    ? users[users.findIndex((user) => user.id === profilePageId)]
+    : null;
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => response.json())
+      .then((data) => setUsers(data));
+  }, []);
+
+  return (
+    <AppContext.Provider value={{ users, setUsers }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<UsersListPage />}></Route>
+          <Route path="/user-profile/:id" element={<ProfilePage />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </AppContext.Provider>
+  );
+};

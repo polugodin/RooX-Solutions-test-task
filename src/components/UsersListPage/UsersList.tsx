@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { AppContext } from '../App';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
@@ -7,7 +8,8 @@ import styles from './UsersList.module.scss';
 
 export const UsersList = () => {
   const { users } = useContext(AppContext);
-  const { setPage, setProfilePageId } = useContext(AppContext);
+  const navigate = useNavigate();
+
   return (
     <>
       {users ? (
@@ -30,10 +32,7 @@ export const UsersList = () => {
               </div>
               <div className={styles.moreButtonContainer}>
                 <button
-                  onClick={() => {
-                    setProfilePageId(user.id);
-                    setPage('userProfile');
-                  }}
+                  onClick={() => navigate(`/user-profile/${user.id}`)}
                   className={styles.moreButton}
                 >
                   Подробнее
@@ -41,6 +40,7 @@ export const UsersList = () => {
               </div>
             </div>
           ))}
+          <div className={styles.usersCounter}>Найдено {users.length} пользователей</div>
         </div>
       ) : (
         <LoadingSpinner />

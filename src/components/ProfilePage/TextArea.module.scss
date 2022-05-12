@@ -1,0 +1,33 @@
+.container {
+  padding-bottom: 10px;
+}
+
+.label-title {
+  font-size: 8px;
+  padding-bottom: 3px;
+}
+
+.textarea {
+  background-color: #ffffff;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  outline: none;
+  padding: 5px 10px;
+  min-width: 210px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: normal;
+  line-height: 1.5em;
+  color: #000000;
+  resize: none;
+  width: 100%;
+  height: 57px;
+
+  &.error {
+    border-color: #d91313;
+  }
+
+  &:disabled {
+    color: #b3b3b3;
+  }
+}

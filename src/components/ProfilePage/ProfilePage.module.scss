@@ -1,0 +1,25 @@
+.main-title-container {
+  display: flex;
+}
+
+.main-title {
+  flex: 1 0 auto;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.edit-button-container {
+  flex: 0 0 auto;
+}
+
+.form-inputs-container {
+  border: 1px solid #f3f3f3;
+  border-radius: 8px;
+  padding: 20px 12px;
+  margin: 10px 0;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: flex-end;
+}

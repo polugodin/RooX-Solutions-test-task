@@ -1,0 +1,39 @@
+.user {
+  display: flex;
+  background-color: #f3f3f3;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 20px 0;
+  font-size: 11px;
+}
+
+.user-info-container {
+  line-height: 1.5em;
+  flex: 1 1 auto;
+}
+
+.user-info-label {
+  color: #a3a3a3;
+  margin-right: 0.5em;
+}
+
+.more-button-container {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+}
+
+.more-button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: #4b51ef;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 5px;
+  margin: -5px;
+  font-family: inherit;
+  &:active {
+    opacity: 0.7;
+  }
+}

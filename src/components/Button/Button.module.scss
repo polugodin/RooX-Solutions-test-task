@@ -1,0 +1,21 @@
+.button {
+  border: none;
+  outline: none;
+  padding: 5px 15px;
+  background-color: #4b51ef;
+  color: #ffffff;
+  font-size: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: inherit;
+  &:active:not(:disabled) {
+    opacity: 0.7;
+  }
+  &:disabled {
+    background-color: #afafaf !important;
+    cursor: default;
+  }
+  &.green {
+    background-color: #52cf4f;
+  }
+}

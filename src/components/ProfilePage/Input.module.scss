@@ -1,0 +1,29 @@
+.container {
+  padding-bottom: 10px;
+}
+
+.label-title {
+  font-size: 8px;
+  padding-bottom: 3px;
+}
+
+.input {
+  background-color: #ffffff;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  outline: none;
+  padding: 5px 10px;
+  min-width: 210px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: normal;
+  color: #000000;
+
+  &.error {
+    border-color: #d91313;
+  }
+
+  &:disabled {
+    color: #b3b3b3;
+  }
+}

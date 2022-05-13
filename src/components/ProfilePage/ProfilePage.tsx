@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useLayoutEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useParams, useNavigate } from 'react-router-dom';
 
@@ -42,6 +42,10 @@ export const ProfilePage = () => {
   const user = users[users.findIndex((user) => user.id === +id)];
   const navigate = useNavigate();
   const [editingMode, setEditingMode] = useState<boolean>(false);
+
+  useLayoutEffect(() => {
+    document.documentElement.scrollTop = 0;
+  }, [])
 
   return (
     <AppContainer>

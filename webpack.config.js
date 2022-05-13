@@ -11,7 +11,7 @@ module.exports = {
   entry: { bundle: path.join(__dirname, 'src', 'index.tsx') },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[contenthash].[name].js',
+    filename: '[name].[contenthash].js',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -57,6 +57,8 @@ module.exports = {
       template: path.join(__dirname, 'src', 'index.html'),
     }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
   ],
 };
